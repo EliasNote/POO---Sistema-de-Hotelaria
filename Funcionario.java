@@ -2,7 +2,7 @@ public class Funcionario {
 
     private static Integer contadorID = 1;
 
-    private Integer idFuncionario;
+    private final Integer idFuncionario;
     private String nomeFuncionario;
 
     public Funcionario(String nomeFuncionario) {
@@ -10,8 +10,6 @@ public class Funcionario {
         contadorID++;
         this.nomeFuncionario = nomeFuncionario;
     }
-
-    public Funcionario(){}
 
     public Integer getIdFuncionario() {
         return idFuncionario;
@@ -26,9 +24,7 @@ public class Funcionario {
     }
 
     public static void infoFuncionario(Funcionario funcionario){
-        System.out.print("Id: " + funcionario.getIdFuncionario());
-        System.out.print("Nome: " + funcionario.getNomeFuncionario());
+        System.out.println("Id: " + funcionario.getIdFuncionario() + " | Nome: " + funcionario.getNomeFuncionario());
     }
-
 
 }

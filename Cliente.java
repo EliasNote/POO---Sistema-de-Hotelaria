@@ -1,3 +1,4 @@
+import java.util.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -13,6 +14,8 @@ public class Cliente {
         this.telefone = telefone;
         this.data_nascimento = data_nascimento;
     }
+
+    public Cliente(){}
 
     public String getNome() {
         return nome;
@@ -44,5 +47,9 @@ public class Cliente {
 
     public void setData_nascimento(LocalDate data_nascimento) {
         this.data_nascimento = data_nascimento;
+    }
+
+    public void cadastrarCliente(){
+
     }
 }
