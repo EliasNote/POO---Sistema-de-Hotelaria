@@ -6,7 +6,7 @@ public class Quarto {
     private Integer numero;
     private String categoria;
     private Double preco;
-    private boolean disponivel;
+    private List<Pessoa> hospede;
     private List<String> categorias = Arrays.asList("simples", "duplo", "casal", "luxo");
 
     public void definirPreco() {
@@ -36,12 +36,12 @@ public class Quarto {
         return categorias;
     }
 
-    public boolean isDisponivel() {
-        return disponivel;
+    public List<Pessoa> getHospede() {
+        return hospede;
     }
 
-    public void setDisponivel(boolean status) {
-        this.disponivel = status;
+    public void setHospede(List<Pessoa> hospede) {
+        this.hospede = hospede;
     }
 
     public void setCategorias(List<String> categorias) {

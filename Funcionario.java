@@ -23,8 +23,8 @@ public class Funcionario {
         this.nomeFuncionario = nomeFuncionario;
     }
 
-    public static void infoFuncionario(Funcionario funcionario){
-        System.out.println("Id: " + funcionario.getIdFuncionario() + " | Nome: " + funcionario.getNomeFuncionario());
+    public void infoFuncionario(){
+        System.out.println("Id: " + idFuncionario + " | Nome: " + nomeFuncionario);
     }
 
 }

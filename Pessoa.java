@@ -1,21 +1,19 @@
-import java.util.*;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
-public class Cliente {
+public class Pessoa {
     private String nome;
     private String cpf;
     private String telefone;
     private LocalDate data_nascimento;
 
-    public Cliente(String nome, String cpf, String telefone, LocalDate data_nascimento) {
+    public Pessoa(String nome, String cpf, String telefone, LocalDate data_nascimento) {
         this.nome = nome;
         this.cpf = cpf;
         this.telefone = telefone;
         this.data_nascimento = data_nascimento;
     }
 
-    public Cliente(){}
+    public Pessoa(){}
 
     public String getNome() {
         return nome;

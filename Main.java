@@ -8,7 +8,7 @@ public class Main {
             System.out.println("------------ MENU ------------");
             // EXIBE OS QUARTOS DISPONÍVEIS
 
-            Cliente cliente = new Cliente("Elias", "123121231", "971293123", LocalDate.of(2003, 05, 23));
+            Pessoa cliente = new Pessoa("Elias", "123121231", "971293123", LocalDate.of(2003, 05, 23));
 
             quartoMenu.getCategorias().forEach(x -> System.out.println(x));
             System.out.print("Escolha: ");

@@ -4,14 +4,12 @@ import java.util.*;
 public class Reserva {
     private Quarto quarto;
     private LocalDate dataReserva;
-    private Date dataEntrada;
-    private Date dataSaida;
-    private Cliente cliente;
+    private LocalDate dataSaida;
+    private Pessoa cliente;
 
-    public Reserva(Quarto quarto, Date dataEntrada, Date dataSaida, Cliente cliente) {
+    public Reserva(Quarto quarto, LocalDate dataReserva, LocalDate dataSaida, Pessoa cliente) {
         this.quarto = quarto;
-        this.dataReserva = LocalDate.now();
-        this.dataEntrada = dataEntrada;
+        this.dataReserva = dataReserva;
         this.dataSaida = dataSaida;
         this.cliente = cliente;
     }
@@ -32,27 +30,19 @@ public class Reserva {
         this.dataReserva = dataReserva;
     }
 
-    public Date getDataEntrada() {
-        return dataEntrada;
-    }
-
-    public void setDataEntrada(Date dataEntrada) {
-        this.dataEntrada = dataEntrada;
-    }
-
-    public Date getDataSaida() {
+    public LocalDate getDataSaida() {
         return dataSaida;
     }
 
-    public void setDataSaida(Date dataSaida) {
+    public void setDataSaida(LocalDate dataSaida) {
         this.dataSaida = dataSaida;
     }
 
-    public Cliente getCliente() {
+    public Pessoa getCliente() {
         return cliente;
     }
 
-    public void setCliente(Cliente cliente) {
+    public void setPessoa(Pessoa cliente) {
         this.cliente = cliente;
     }
 }
