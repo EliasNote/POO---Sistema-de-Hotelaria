@@ -1,4 +1,4 @@
-
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -10,16 +10,16 @@ public class Quarto {
     private List<String> categorias = Arrays.asList("simples", "duplo", "casal", "luxo");
 
     public void definirPreco() {
-        if (categoria == "simples") {
+        if (categoria.equals("simples")){
             preco = 150.00;
         }
-        if (categoria == "duplo") {
+        if (categoria.equals("duplo")) {
             preco = 190.00;
         }
-        if (categoria == "casal") {
+        if (categoria.equals("casal")) {
             preco = 230.00;
         }
-        if (categoria == "luxo") {
+        if (categoria.equals("luxo")) {
             preco = 450.00;
         }
     }
@@ -70,5 +70,28 @@ public class Quarto {
 
     public void setPreco(Double preco) {
         this.preco = preco;
+    }
+
+    public static List<Quarto> gerarQuartos(int quantidade){
+        List<Quarto> quartos = new ArrayList<>();
+        List <String> categorias = List.of("simples", "duplo", "casal", "luxo");
+
+        int indiceCategoria = 0;
+
+        for (int i = 1; i <= quantidade; i++) {
+            String categoria = categorias.get(indiceCategoria);
+            Quarto quarto = new Quarto(i, categoria);
+            quartos.add(quarto);
+
+            indiceCategoria++;
+            if (indiceCategoria >= categorias.size()) {
+                indiceCategoria = 0;
+            }
+        }
+        return quartos;
+    }
+
+    public void listarQuartos() {
+        System.out.println("Número: " + numero + " | Categoria: " + categoria + " | Preço: " + preco);
     }
 }
