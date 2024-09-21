@@ -3,16 +3,17 @@ import java.util.*;
 
 public class Reserva {
     private Quarto quarto;
-    private LocalDate dataReserva;
+    private LocalDate dataReserva = LocalDate.now();
     private LocalDate dataSaida;
     private Pessoa cliente;
 
-    public Reserva(Quarto quarto, LocalDate dataReserva, LocalDate dataSaida, Pessoa cliente) {
+    public Reserva(Quarto quarto, LocalDate dataSaida, Pessoa cliente) {
         this.quarto = quarto;
-        this.dataReserva = dataReserva;
         this.dataSaida = dataSaida;
         this.cliente = cliente;
     }
+
+    public Reserva() {}
 
     public Quarto getQuarto() {
         return quarto;
@@ -42,7 +43,7 @@ public class Reserva {
         return cliente;
     }
 
-    public void setPessoa(Pessoa cliente) {
+    public void setCliente(Pessoa cliente) {
         this.cliente = cliente;
     }
 }

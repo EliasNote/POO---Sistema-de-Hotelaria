@@ -1,30 +1,42 @@
+import java.util.Scanner;
+
 public class Funcionario {
 
-    private static Integer contadorID = 1;
+    private String nome;
+    private String cpf;
 
-    private final Integer idFuncionario;
-    private String nomeFuncionario;
-
-    public Funcionario(String nomeFuncionario) {
-        this.idFuncionario = contadorID;
-        contadorID++;
-        this.nomeFuncionario = nomeFuncionario;
+    public Funcionario(String nome, String cpf) {
+        this.nome = nome;
+        this.cpf = cpf;
     }
 
-    public Integer getIdFuncionario() {
-        return idFuncionario;
+    public Funcionario() {}
+
+    public static Funcionario cadastrarFuncionario() {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.println("Digite o seu nome: ");
+        String nome = sc.nextLine();
+
+        System.out.println("Digite o seu CPF: ");
+        String cpf = sc.nextLine();
+
+        return new Funcionario(nome, cpf);
     }
 
-    public String getNomeFuncionario() {
-        return nomeFuncionario;
+    public String getNome() {
+        return nome;
     }
 
-    public void setNomeFuncionario(String nomeFuncionario) {
-        this.nomeFuncionario = nomeFuncionario;
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
-    public void infoFuncionario(){
-        System.out.println("Id: " + idFuncionario + " | Nome: " + nomeFuncionario);
+    public String getCpf() {
+        return cpf;
     }
 
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
+    }
 }
