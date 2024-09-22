@@ -49,6 +49,20 @@ public class Quarto {
         frigobar.add(new ItemFrigobar("Água", 5.00, 10));
         frigobar.add(new ItemFrigobar("Refrigerante", 7.00, 5));
         frigobar.add(new ItemFrigobar("Cerveja", 10.00, 8));
+
+        if (categoria.equals("duplo") || categoria.equals("casal") || categoria.equals("luxo")) {
+            frigobar.add(new ItemFrigobar("Suco", 8.00, 5));
+            frigobar.add(new ItemFrigobar("Chocolate", 15.00, 10));
+            frigobar.add(new ItemFrigobar("Amendoim", 12.00, 7));
+        }
+        if (categoria.equals("casal") || categoria.equals("luxo")) {
+            frigobar.add(new ItemFrigobar("Vinho", 50.00, 2));
+            frigobar.add(new ItemFrigobar("Biscoito", 10.00, 5));
+        }
+        if (categoria.equals("luxo")) {
+            frigobar.add(new ItemFrigobar("Champanhe", 100.00, 1));
+            frigobar.add(new ItemFrigobar("Whisky", 200.00, 1));
+        }
     }
 
     // Consumir um item do frigobar

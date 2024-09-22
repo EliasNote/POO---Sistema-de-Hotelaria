@@ -53,7 +53,7 @@ public class Menu {
             System.out.println("\n---- Menu ----");
             System.out.println("1 - Fazer reserva");
             System.out.println("2 - Cadastrar Hóspedes");
-
+            System.out.println("3 - Opções do Quarto");
             System.out.println("0 - Sair");
             System.out.print("Escolha uma opção: ");
             escolha = sc.nextInt();
@@ -69,7 +69,7 @@ public class Menu {
                     break;
 
                 case 3:
-                    cadastroFuncionario();
+                    acessarQuarto();
                     break;
 
                 case 0:
@@ -145,6 +145,15 @@ public class Menu {
         if (escolha == 1) {
             cadastroHospede();
         }
+    }
+
+    public void acessarQuarto() {
+
+
+
+
+
+
     }
 
     public void cadastroFuncionario() {
