@@ -1,3 +1,4 @@
+import java.util.List;
 import java.util.Scanner;
 
 public class Funcionario {
@@ -22,6 +23,10 @@ public class Funcionario {
         String cpf = sc.nextLine();
 
         return new Funcionario(nome, cpf);
+    }
+
+    public static Funcionario buscarFuncionario(List<Funcionario> funcionarios, String cpf) {
+        return funcionarios.stream().filter(funcionario -> funcionario.getCpf().equals(cpf)).findFirst().orElse(null);
     }
 
     public String getNome() {

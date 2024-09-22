@@ -8,6 +8,7 @@ public class Menu {
     private List<Quarto> quartos = Quarto.gerarQuartos(5);
     private List<Reserva> reservas = new ArrayList<>();
     private List<Funcionario> funcionarios = new ArrayList<>();
+    private Funcionario funcionarioAcesso = null;
 
     public Menu() {
         int escolha = -1;
@@ -16,6 +17,7 @@ public class Menu {
             System.out.println("\n---- Acesso ----");
             System.out.println("1 - Acessar");
             System.out.println("2 - Cadastrar Funcionário");
+            System.out.println("0 - Sair");
 
             System.out.print("Escolha uma opção: ");
             escolha = sc.nextInt();
@@ -26,10 +28,10 @@ public class Menu {
                     System.out.print("Digite o número do cpf: ");
                     String cpf = sc.nextLine();
 
-                    Funcionario funcionario = buscarFuncionario(cpf);
+                    funcionarioAcesso = Funcionario.buscarFuncionario(funcionarios, cpf);
 
-                    if (funcionario != null) {
-                        menuHotel(funcionario);
+                    if (funcionarioAcesso != null) {
+                        menuHotel();
                     } else {
                         System.out.println("Nenhum funcionário com esse CPF encontrado!");
                     }
@@ -40,6 +42,10 @@ public class Menu {
                     cadastroFuncionario();
                     break;
 
+                case 0:
+                    System.out.println("Saindo...");
+                    break;
+
                 default:
                     System.out.println("Opção inválida. Tente novamente.");
                     break;
@@ -47,13 +53,14 @@ public class Menu {
         }
     }
 
-    public void menuHotel(Funcionario funcionario) {
+    public void menuHotel() {
         int escolha = -1;
         while (escolha != 0) {
             System.out.println("\n---- Menu ----");
             System.out.println("1 - Fazer reserva");
             System.out.println("2 - Cadastrar Hóspedes");
             System.out.println("3 - Opções do Quarto");
+            /// ENCERRAR RESERVA MOSTRAR ITENS CONSUMIDOS, DIAS E CONTA
             System.out.println("0 - Sair");
             System.out.print("Escolha uma opção: ");
             escolha = sc.nextInt();
@@ -61,7 +68,7 @@ public class Menu {
 
             switch (escolha) {
                 case 1:
-                    cadastroReserva(funcionario);
+                    cadastroReserva();
                     break;
 
                 case 2:
@@ -83,7 +90,84 @@ public class Menu {
         }
     }
 
-    public void cadastroReserva(Funcionario funcionario) {
+    public void acessarQuarto() {
+        Quarto quarto = null;
+
+        while (quarto == null) {
+            System.out.print("Digite o número do quarto: ");
+            int numeroQuarto = sc.nextInt();
+            sc.nextLine();
+
+            quarto = Quarto.buscarQuarto(reservas, numeroQuarto);
+
+            if (quarto == null) {
+                System.out.println("Quarto não reservado!");
+                menuHotel();
+            }
+        }
+
+        int escolha = -1;
+        while (escolha != 0) {
+
+
+            System.out.println("\n---- Quarto ----");
+            System.out.println("1 - Listar itens do quarto");
+            System.out.println("2 - Listar itens frigobar");
+            System.out.println("3 - Listar cliente e hóspedes");
+            System.out.println("4 - Listar Serviços");
+            System.out.println("5 - Registrar consumo do frigobar");
+            System.out.println("6 - Registrar serviço solicitado");
+            System.out.println("0 - Sair");
+            System.out.print("Escolha uma opção: ");
+            escolha = sc.nextInt();
+            sc.nextLine();
+
+            switch (escolha) {
+                case 1:
+                    quarto.listarItensQuarto();
+                    break;
+
+                case 2:
+                    quarto.listarItensFrigobar();
+                    break;
+
+                case 3:
+                    quarto.listarHospedes();
+                    break;
+
+                case 4:
+                    quarto.listarServicos();
+                    break;
+
+                case 5:
+                    System.out.print("Digite o nome do item que deseja consumir: ");
+                    String item = sc.nextLine();
+                    System.out.print("Digite a quantidade: ");
+                    int quantidade = sc.nextInt();
+                    sc.nextLine();
+
+                    quarto.consumirFrigobar(item, quantidade);
+                    break;
+
+                case 6:
+                    System.out.print("Digite o serviço que deseja solicitar: ");
+                    String servico = sc.nextLine();
+
+                    quarto.solicitarServico(servico);
+                    break;
+
+                case 0:
+                    System.out.println("Saindo...");
+                    break;
+
+                default:
+                    System.out.println("Opção inválida. Tente novamente.");
+                    break;
+            }
+        }
+    }
+
+    public void cadastroReserva() {
         // CADASTRO RESERVA
         int numeroQuarto = 0;
         while (numeroQuarto == 0 || Quarto.estaReservado(reservas, numeroQuarto)) {
@@ -106,7 +190,7 @@ public class Menu {
         System.out.print("Data da provável saída (formato AAAA-MM-DD): ");
         LocalDate dataSaida = LocalDate.parse(sc.nextLine());
 
-        reservas.add(new Reserva(quartos.get(numeroQuarto-1), dataSaida, cliente, funcionario));
+        reservas.add(new Reserva(quartos.get(numeroQuarto-1), dataSaida, cliente, funcionarioAcesso));
     }
 
     public void cadastroHospede() {
@@ -147,15 +231,6 @@ public class Menu {
         }
     }
 
-    public void acessarQuarto() {
-
-
-
-
-
-
-    }
-
     public void cadastroFuncionario() {
         // CADASTRO FUNCIONÁRIO
         System.out.println("\n---- Cadastro de Funcionário ----");
@@ -178,16 +253,5 @@ public class Menu {
         if (escolha == 1) {
             cadastroFuncionario();
         }
-    }
-
-    public Funcionario buscarFuncionario(String cpf) {
-        Funcionario funcionario = null;
-
-        for (Funcionario f : funcionarios) {
-            if (f.getCpf().equals(cpf)) {
-                funcionario = f;
-            }
-        }
-        return funcionario;
     }
 }

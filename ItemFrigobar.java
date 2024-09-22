@@ -1,6 +1,6 @@
 public class ItemFrigobar {
     private String nome;
-    private double preco;
+    private double preco = 0.00;
     private int quantidade;
 
     public ItemFrigobar(String nome, double preco, int quantidade) {
@@ -21,12 +21,20 @@ public class ItemFrigobar {
         return quantidade;
     }
 
-    public void consumirItem(int quantidadeConsumida) {
-        if (quantidadeConsumida <= quantidade) {
-            quantidade -= quantidadeConsumida;
-        } else {
-            System.out.println("Quantidade consumida maior do que disponível.");
-        }
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public void setPreco(double preco) {
+        this.preco = preco;
+    }
+
+    public void setQuantidade(int quantidade) {
+        this.quantidade = quantidade;
+    }
+
+    public Double calcularCusto(int quantidade) {
+        return preco * quantidade;
     }
 
     @Override

@@ -9,7 +9,9 @@ public class Quarto {
     private List<Pessoa> hospedes;
     private List<String> categorias = Arrays.asList("simples", "duplo", "casal", "luxo");
     private List<ItemFrigobar> frigobar;
+    private List<ItemQuarto> itensQuarto;
     private List<Servico> servicos;
+    private Double custoTotal = 0.00;
 
 
     private static Integer contadorNumeroQuarto = 1;
@@ -24,11 +26,12 @@ public class Quarto {
         this.servicos = new ArrayList<>();
         definirPreco();
         inicializarFrigobar();
+        inicializarItensQuarto();
+        inicializarServicos();
     }
 
     public Quarto() {}
 
-    // Define o preço do quarto de acordo com a categoria
     public void definirPreco() {
         if (categoria.equals("simples")){
             preco = 150.00;
@@ -44,7 +47,6 @@ public class Quarto {
         }
     }
 
-    // Inicia o frigobar com itens
     private void inicializarFrigobar() {
         frigobar.add(new ItemFrigobar("Água", 5.00, 10));
         frigobar.add(new ItemFrigobar("Refrigerante", 7.00, 5));
@@ -65,12 +67,58 @@ public class Quarto {
         }
     }
 
+    private void inicializarItensQuarto() {
+        itensQuarto = new ArrayList<>();
+
+        itensQuarto.add(new ItemQuarto("Cama", "Cama confortável de casal"));
+        itensQuarto.add(new ItemQuarto("TV", "Televisão de 42 polegadas"));
+        itensQuarto.add(new ItemQuarto("Ar Condicionado", "Ar condicionado split"));
+
+        if (categoria.equals("duplo") || categoria.equals("casal") || categoria.equals("luxo")) {
+            itensQuarto.add(new ItemQuarto("Mesa", "Mesa de trabalho com cadeira"));
+            itensQuarto.add(new ItemQuarto("Guarda-roupa", "Guarda-roupa espaçoso"));
+        }
+        if (categoria.equals("casal") || categoria.equals("luxo")) {
+            itensQuarto.add(new ItemQuarto("Sofá", "Sofá confortável"));
+            itensQuarto.add(new ItemQuarto("Frigobar", "Frigobar com bebidas e snacks"));
+        }
+        if (categoria.equals("luxo")) {
+            itensQuarto.add(new ItemQuarto("Banheira", "Banheira de hidromassagem"));
+            itensQuarto.add(new ItemQuarto("Cofre", "Cofre eletrônico"));
+        }
+    }
+
+    private void inicializarServicos() {
+        servicos = new ArrayList<>();
+
+        servicos.add(new Servico("Passar Roupa", 20.00));
+        servicos.add(new Servico("Lavanderia", 30.00));
+
+        if (categoria.equals("duplo") || categoria.equals("casal") || categoria.equals("luxo")) {
+            servicos.add(new Servico("Serviço de Quarto", 50.00));
+        }
+        if (categoria.equals("casal") || categoria.equals("luxo")) {
+            servicos.add(new Servico("Massagem", 100.00));
+        }
+        if (categoria.equals("luxo")) {
+            servicos.add(new Servico("Spa", 200.00));
+            servicos.add(new Servico("Transporte Privado", 150.00));
+        }
+    }
+
     // Consumir um item do frigobar
     public void consumirFrigobar(String nomeItem, int quantidade) {
         for (ItemFrigobar item : frigobar) {
             if (item.getNome().equals(nomeItem)) {
-                item.consumirItem(quantidade);
-                System.out.println("Item consumido: " + nomeItem + " | Quantidade: " + quantidade);
+                if (quantidade <= item.getQuantidade()) {
+                    item.setQuantidade(item.getQuantidade() - quantidade);
+
+                    custoTotal += item.calcularCusto(quantidade);
+
+                    System.out.println("Item consumido: " + nomeItem + " | Quantidade: " + quantidade);
+                } else {
+                    System.out.println("Quantidade consumida maior do que disponível.");
+                }
                 return;
             }
         }
@@ -78,15 +126,16 @@ public class Quarto {
     }
 
     public void solicitarServico(String tipo) {
-        Servico servico = new Servico(tipo);
-        servicos.add(servico);
-        System.out.println("Serviço solicitado: " + tipo);
-    }
+        for (Servico servico : servicos) {
+            if (servico.getTipo().equals(tipo)) {
 
-    public void listarFrigobar() {
-        for (ItemFrigobar item : frigobar) {
-            System.out.println(item);
+                custoTotal += servico.getPreco();
+
+                System.out.println("Serviço: " + servico.getTipo() + " | Preço: " + servico.getPreco());
+                return;
+            }
         }
+        System.out.println("Serviço não existente.");
     }
 
     public void listarServicos() {
@@ -117,13 +166,32 @@ public class Quarto {
     }
 
     public static boolean estaReservado(List<Reserva> reservas, int numeroQuarto) {
-        boolean verificar = false;
         for (Reserva reserva : reservas) {
             if (reserva.getQuarto().getNumero().equals(numeroQuarto)) {
-                verificar = true;
+                return true;
             }
         }
-        return verificar;
+        return false;
+    }
+
+    public static Quarto buscarQuarto(List<Reserva> reservas, int numero) {
+        return reservas.stream().filter(reserva -> reserva.getQuarto().getNumero().equals(numero)).findFirst().orElse(null).getQuarto();
+    }
+
+    public void listarItensQuarto() {
+        itensQuarto.forEach(item -> System.out.println("Item: " + item.getNome() + " | Descrição: " + item.getDescricao()));
+    }
+
+    public void listarItensFrigobar() {
+        frigobar.forEach(item -> {
+            if (item.getQuantidade() != 0) {
+                System.out.println("Item: " + item.getNome() + " | Preço: " + item.getPreco() + " | Quantidade: " + item.getQuantidade());
+            }
+        });
+    }
+
+    public void listarHospedes() {
+        hospedes.forEach(hospede -> System.out.println(hospede));
     }
 
     public Integer getNumero() {
