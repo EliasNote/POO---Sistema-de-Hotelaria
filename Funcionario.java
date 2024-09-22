@@ -15,10 +15,10 @@ public class Funcionario {
     public static Funcionario cadastrarFuncionario() {
         Scanner sc = new Scanner(System.in);
 
-        System.out.println("Digite o seu nome: ");
+        System.out.print("Digite o seu nome: ");
         String nome = sc.nextLine();
 
-        System.out.println("Digite o seu CPF: ");
+        System.out.print("Digite o seu CPF: ");
         String cpf = sc.nextLine();
 
         return new Funcionario(nome, cpf);

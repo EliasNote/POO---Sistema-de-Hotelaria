@@ -6,11 +6,13 @@ public class Reserva {
     private LocalDate dataReserva = LocalDate.now();
     private LocalDate dataSaida;
     private Pessoa cliente;
+    private Funcionario funcionario;
 
-    public Reserva(Quarto quarto, LocalDate dataSaida, Pessoa cliente) {
+    public Reserva(Quarto quarto, LocalDate dataSaida, Pessoa cliente, Funcionario funcionario) {
         this.quarto = quarto;
         this.dataSaida = dataSaida;
         this.cliente = cliente;
+        this.funcionario = funcionario;
     }
 
     public Reserva() {}
@@ -45,5 +47,13 @@ public class Reserva {
 
     public void setCliente(Pessoa cliente) {
         this.cliente = cliente;
+    }
+
+    public Funcionario getFuncionario() {
+        return funcionario;
+    }
+
+    public void setFuncionario(Funcionario funcionario) {
+        this.funcionario = funcionario;
     }
 }

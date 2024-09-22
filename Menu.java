@@ -11,11 +11,49 @@ public class Menu {
 
     public Menu() {
         int escolha = -1;
+
         while (escolha != 0) {
-            System.out.println("Menu:");
+            System.out.println("\n---- Acesso ----");
+            System.out.println("1 - Acessar");
+            System.out.println("2 - Cadastrar Funcionário");
+
+            System.out.print("Escolha uma opção: ");
+            escolha = sc.nextInt();
+            sc.nextLine();
+
+            switch (escolha) {
+                case 1:
+                    System.out.print("Digite o número do cpf: ");
+                    String cpf = sc.nextLine();
+
+                    Funcionario funcionario = buscarFuncionario(cpf);
+
+                    if (funcionario != null) {
+                        menuHotel(funcionario);
+                    } else {
+                        System.out.println("Nenhum funcionário com esse CPF encontrado!");
+                    }
+
+                    break;
+
+                case 2:
+                    cadastroFuncionario();
+                    break;
+
+                default:
+                    System.out.println("Opção inválida. Tente novamente.");
+                    break;
+            }
+        }
+    }
+
+    public void menuHotel(Funcionario funcionario) {
+        int escolha = -1;
+        while (escolha != 0) {
+            System.out.println("\n---- Menu ----");
             System.out.println("1 - Fazer reserva");
             System.out.println("2 - Cadastrar Hóspedes");
-            System.out.println("3 - Cadastrar Funcionário");
+
             System.out.println("0 - Sair");
             System.out.print("Escolha uma opção: ");
             escolha = sc.nextInt();
@@ -23,7 +61,7 @@ public class Menu {
 
             switch (escolha) {
                 case 1:
-                    cadastroReserva();
+                    cadastroReserva(funcionario);
                     break;
 
                 case 2:
@@ -45,10 +83,10 @@ public class Menu {
         }
     }
 
-    public void cadastroReserva() {
+    public void cadastroReserva(Funcionario funcionario) {
         // CADASTRO RESERVA
         int numeroQuarto = 0;
-        while (Quarto.estaReservado(reservas, numeroQuarto)) {
+        while (numeroQuarto == 0 || Quarto.estaReservado(reservas, numeroQuarto)) {
             System.out.println("---- Quartos Disponíveis ----");
             Quarto.listarQuartosDisponiveis(quartos, reservas);
 
@@ -56,7 +94,9 @@ public class Menu {
             numeroQuarto = sc.nextInt();
             sc.nextLine();
 
-            if (Quarto.estaReservado(reservas, numeroQuarto)) {
+            if (numeroQuarto <= 0 || numeroQuarto > quartos.size()) {
+                System.out.println("\nNúmero do quarto inválido. Por favor, escolha um quarto entre 1 e " + quartos.size() + ".\n");
+            } else if (Quarto.estaReservado(reservas, numeroQuarto)) {
                 System.out.println("\nQuarto já reservado\n");
             }
         }
@@ -66,7 +106,7 @@ public class Menu {
         System.out.print("Data da provável saída (formato AAAA-MM-DD): ");
         LocalDate dataSaida = LocalDate.parse(sc.nextLine());
 
-        reservas.add(new Reserva(quartos.get(numeroQuarto-1), dataSaida, cliente));
+        reservas.add(new Reserva(quartos.get(numeroQuarto-1), dataSaida, cliente, funcionario));
     }
 
     public void cadastroHospede() {
@@ -88,12 +128,19 @@ public class Menu {
             }
         }
 
-        System.out.print("Deseja cadastrar mais hóspedes?\n" +
-                "1 - Sim\n" +
-                "2 - Não\n" +
-                "Escolha: ");
-        int escolha = sc.nextInt();
-        sc.nextLine();
+        int escolha = 0;
+        while (escolha != 1 && escolha != 2) {
+            System.out.print("Deseja cadastrar mais hóspedes?\n" +
+                    "1 - Sim\n" +
+                    "2 - Não\n" +
+                    "Escolha: ");
+            escolha = sc.nextInt();
+            sc.nextLine();
+
+            if (escolha != 1 && escolha != 2) {
+                System.out.println("Opção inválida. Tente novamente.");
+            }
+        }
 
         if (escolha == 1) {
             cadastroHospede();
@@ -102,18 +149,36 @@ public class Menu {
 
     public void cadastroFuncionario() {
         // CADASTRO FUNCIONÁRIO
-        System.out.println("---- Cadastro de Funcionário");
+        System.out.println("\n---- Cadastro de Funcionário ----");
         funcionarios.add(Funcionario.cadastrarFuncionario());
 
-        System.out.print("Deseja cadastrar mais funcionarios?\n" +
-                "1 - Sim\n" +
-                "2 - Não\n" +
-                "Escolha: ");
-        int escolha = sc.nextInt();
-        sc.nextLine();
+        int escolha = 0;
+        while (escolha != 1 && escolha != 2) {
+            System.out.print("\nDeseja cadastrar mais funcionarios?\n" +
+                    "1 - Sim\n" +
+                    "2 - Não\n" +
+                    "Escolha: ");
+            escolha = sc.nextInt();
+            sc.nextLine();
+
+            if (escolha != 1 && escolha != 2) {
+                System.out.println("Opção inválida. Tente novamente.");
+            }
+        }
 
         if (escolha == 1) {
             cadastroFuncionario();
         }
+    }
+
+    public Funcionario buscarFuncionario(String cpf) {
+        Funcionario funcionario = null;
+
+        for (Funcionario f : funcionarios) {
+            if (f.getCpf().equals(cpf)) {
+                funcionario = f;
+            }
+        }
+        return funcionario;
     }
 }

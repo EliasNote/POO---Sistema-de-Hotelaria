@@ -5,11 +5,6 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        List<Quarto> quartos = Quarto.gerarQuartos(5);
-        List<Reserva> reservas = new ArrayList<>();
-        List<Funcionario> funcionarios = new ArrayList<>();
-
         new Menu();
         ///// FAZER REMOÇÃO DE RESERVAS
 
