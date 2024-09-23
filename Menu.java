@@ -219,10 +219,13 @@ public class Menu {
         Pessoa hospede = Pessoa.cadastrarCliente();
 
         int numeroQuartoHospede = 0;
-        while (!Quarto.estaReservado(reservas, numeroQuartoHospede)) {
+        if (Quarto.estaReservado(reservas, numeroQuartoHospede)) {
             System.out.print("Número do quarto: ");
             numeroQuartoHospede = sc.nextInt();
             sc.nextLine();
+        } else {
+            System.out.println("\nQuarto não reservado!");
+            menuHotel();
         }
 
         for (Quarto quarto : quartos) {
