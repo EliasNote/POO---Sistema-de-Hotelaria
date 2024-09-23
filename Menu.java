@@ -60,7 +60,7 @@ public class Menu {
             System.out.println("1 - Fazer reserva");
             System.out.println("2 - Cadastrar Hóspedes");
             System.out.println("3 - Opções do Quarto");
-            /// ENCERRAR RESERVA MOSTRAR ITENS CONSUMIDOS, DIAS E CONTA
+            System.out.println("4 - Encerrar Hospedagem");
             System.out.println("0 - Sair");
             System.out.print("Escolha uma opção: ");
             escolha = sc.nextInt();
@@ -79,6 +79,10 @@ public class Menu {
                     acessarQuarto();
                     break;
 
+                case 4:
+                    encerrarHospedagem();
+                    break;
+
                 case 0:
                     System.out.println("Saindo...");
                     break;
@@ -88,6 +92,22 @@ public class Menu {
                     break;
             }
         }
+    }
+
+    public void encerrarHospedagem() {
+        System.out.print("Digite o número do quarto para checkout: ");
+        int numeroQuarto = sc.nextInt();
+        sc.nextLine();
+
+        for (int i = 0; i < reservas.size(); i++) {
+            if (reservas.get(i).getQuarto().getNumero() == numeroQuarto) {
+                reservas.get(i).checkOut();
+                reservas.remove(i);
+                System.out.println("Hospedagem encerrada com sucesso!");
+                return;
+            }
+        }
+        System.out.println("Quarto não encontrado ou não reservado.");
     }
 
     public void acessarQuarto() {

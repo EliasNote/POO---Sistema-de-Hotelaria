@@ -12,6 +12,7 @@ public class Quarto {
     private List<ItemQuarto> itensQuarto;
     private List<Servico> servicos;
     private Double custoTotal = 0.00;
+    private List<String> historicoConsumo = new ArrayList<>();
 
 
     private static Integer contadorNumeroQuarto = 1;
@@ -45,6 +46,19 @@ public class Quarto {
         if (categoria.equals("luxo")) {
             preco = 450.00;
         }
+    }
+
+    public void registrarConsumo(String item, Double valor) {
+        this.custoTotal += valor;
+        historicoConsumo.add(item + ": " + valor);
+    }
+
+    public Double getCustoTotal() {
+        return custoTotal;
+    }
+
+    public List<String> getHistoricoConsumo() {
+        return historicoConsumo;
     }
 
     private void inicializarFrigobar() {
@@ -112,8 +126,7 @@ public class Quarto {
             if (item.getNome().equals(nomeItem)) {
                 if (quantidade <= item.getQuantidade()) {
                     item.setQuantidade(item.getQuantidade() - quantidade);
-
-                    custoTotal += item.calcularCusto(quantidade);
+                    registrarConsumo(item.getNome(), item.getPreco() * quantidade);
 
                     System.out.println("Item consumido: " + nomeItem + " | Quantidade: " + quantidade);
                 } else {
@@ -129,7 +142,7 @@ public class Quarto {
         for (Servico servico : servicos) {
             if (servico.getTipo().equals(tipo)) {
 
-                custoTotal += servico.getPreco();
+                registrarConsumo(servico.getTipo(), servico.getPreco());
 
                 System.out.println("Serviço: " + servico.getTipo() + " | Preço: " + servico.getPreco());
                 return;

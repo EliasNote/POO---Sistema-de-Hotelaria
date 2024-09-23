@@ -7,6 +7,11 @@ public class Servico {
         this.preco = preco;
     }
 
+    @Override
+    public String toString() {
+        return "Serviço: " + tipo + " | Preço: R$ " + preco;
+    }
+
     public String getTipo() {
         return tipo;
     }
