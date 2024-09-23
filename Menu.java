@@ -188,7 +188,6 @@ public class Menu {
     }
 
     public void cadastroReserva() {
-        // CADASTRO RESERVA
         int numeroQuarto = 0;
         while (numeroQuarto == 0 || Quarto.estaReservado(reservas, numeroQuarto)) {
             System.out.println("---- Quartos Disponíveis ----");
@@ -214,26 +213,26 @@ public class Menu {
     }
 
     public void cadastroHospede() {
-        // CADASTRO HÓSPEDE
         System.out.println("---- Cadastro de Hóspedes ----");
         Pessoa hospede = Pessoa.cadastrarCliente();
 
-        int numeroQuartoHospede = 0;
+        System.out.print("Número do quarto: ");
+        int numeroQuartoHospede = sc.nextInt();
+        sc.nextLine();
+
         if (Quarto.estaReservado(reservas, numeroQuartoHospede)) {
-            System.out.print("Número do quarto: ");
-            numeroQuartoHospede = sc.nextInt();
-            sc.nextLine();
+            for (Quarto quarto : quartos) {
+                if (quarto.getNumero() == numeroQuartoHospede) {
+                    quarto.getHospedes().add(hospede);
+                    break;
+                }
+            }
         } else {
             System.out.println("\nQuarto não reservado!");
-            menuHotel();
+
         }
 
-        for (Quarto quarto : quartos) {
-            if (quarto.getNumero() == numeroQuartoHospede) {
-                quarto.getHospedes().add(hospede);
-                break;
-            }
-        }
+        menuHotel();
 
         int escolha = 0;
         while (escolha != 1 && escolha != 2) {
@@ -255,7 +254,6 @@ public class Menu {
     }
 
     public void cadastroFuncionario() {
-        // CADASTRO FUNCIONÁRIO
         System.out.println("\n---- Cadastro de Funcionário ----");
         funcionarios.add(Funcionario.cadastrarFuncionario());
 

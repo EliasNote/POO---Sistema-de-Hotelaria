@@ -16,13 +16,11 @@ public class Reserva {
     }
 
     public void checkOut() {
-        // Cálculo do custo total
         long diasEstadia = java.time.temporal.ChronoUnit.DAYS.between(dataReserva, dataSaida);
         double custoEstadia = quarto.getPreco() * diasEstadia;
 
         double custoTotal = custoEstadia + quarto.getCustoTotal();
 
-        // Exibindo informações do checkout
         System.out.println("---- Checkout ----");
         System.out.println("Cliente: " + cliente.getNome());
         System.out.println("Data de Reserva: " + dataReserva);
@@ -30,9 +28,11 @@ public class Reserva {
         System.out.println("Quarto: " + quarto.getNumero() + " | Categoria: " + quarto.getCategoria());
         System.out.println("Custo da Estadia: " + custoEstadia);
         System.out.println("Itens e serviços consumidos:");
+
         for (String consumo : quarto.getHistoricoConsumo()) {
             System.out.println(" - " + consumo);
         }
+
         System.out.println("Custo Total: " + custoTotal);
         System.out.println("Funcionário responsável pelo checkout: " + funcionario.getNome());
     }

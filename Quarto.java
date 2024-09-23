@@ -17,7 +17,6 @@ public class Quarto {
 
     private static Integer contadorNumeroQuarto = 1;
 
-    // Construtor que inicializa o número e a categoria do quarto
     public Quarto(String categoria) {
         this.numero = contadorNumeroQuarto;
         contadorNumeroQuarto++;
@@ -120,7 +119,6 @@ public class Quarto {
         }
     }
 
-    // Consumir um item do frigobar
     public void consumirFrigobar(String nomeItem, int quantidade) {
         for (ItemFrigobar item : frigobar) {
             if (item.getNome().equals(nomeItem)) {
