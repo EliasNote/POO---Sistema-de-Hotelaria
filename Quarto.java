@@ -175,7 +175,15 @@ public class Quarto {
     }
 
     public static Quarto buscarQuarto(List<Reserva> reservas, int numero) {
-        return reservas.stream().filter(reserva -> reserva.getQuarto().getNumero().equals(numero)).findFirst().orElse(null).getQuarto();
+        Quarto quarto = null;
+
+        for (Reserva reserva : reservas) {
+            if (reserva.getQuarto().getNumero().equals(numero)) {
+                quarto = reserva.getQuarto();
+            }
+        }
+
+        return quarto;
     }
 
     public void listarItensQuarto() {
